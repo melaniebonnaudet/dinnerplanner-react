@@ -35,6 +35,7 @@ class DishDetail extends Component {
 		modelInstance.addDishToMenu(this.props.match.params.dishID)
 		//console.log(modelInstance.getFullMenu());
 		modelInstance.setMenuDishName();
+		modelInstance.setMenuDishPrice();
 		//console.log(modelInstance.getMenuDishName());
 	}
 

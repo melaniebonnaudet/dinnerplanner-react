@@ -8,6 +8,8 @@ const DinnerModel = function () {
   let observers = [];
   let menu = [];
   let dishNames = [];
+  let dishPrices = [];
+  let totalMenuPrice = 0;
 
   this.setNumberOfGuests = function (num) {
     numberOfGuests = num;
@@ -35,7 +37,6 @@ const DinnerModel = function () {
 
   this.setMenuDishName = function() {
     var i;
-    //var dish;
     if (menu.length != 0) {
       while (dishNames.length > 0) {
             dishNames.pop();
@@ -57,6 +58,31 @@ const DinnerModel = function () {
     return dishNames;
   }
 
+  this.setMenuDishPrice = function() {
+    var i;
+    var dishPrice;
+    if (menu.length != 0) {
+      while (dishPrices.length > 0) {
+            dishPrices.pop();
+          }
+      for (i in menu) {
+        this.getDish(menu[i]).then(dish => { 
+        dishPrice = ((dish.pricePerServing / dish.servings)*this.getNumberOfGuests()).toFixed(2);  
+          dishPrices.push(dishPrice);
+        totalMenuPrice += parseInt(dishPrice);
+          notifyObservers();
+        });
+      }
+    }
+  }
+
+  this.getMenuDishPrice = function() {
+    return dishPrices;
+  }
+
+this.getTotMenuPrice = function() {
+  return totalMenuPrice;
+}
   // API Calls
 
   this.getAllDishes = function (type, filter) {

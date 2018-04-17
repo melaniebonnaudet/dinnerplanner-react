@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Sidebar.css';
 import {modelInstance} from '../data/DinnerModel';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
 
@@ -10,10 +11,10 @@ class Sidebar extends Component {
     // we put on state the properties we want to use and modify in the component
     this.state = {
       numberOfGuests: this.props.model.getNumberOfGuests(),
-      menu: this.props.model.getFullMenu(),
       dish: {},
       dishNames: this.props.model.getMenuDishName(),
-      test: ["hey"]
+      dishPrices: this.props.model.getMenuDishPrice(),
+      menuPrice: this.props.model.getTotMenuPrice()
     }
   }
 
@@ -37,8 +38,8 @@ class Sidebar extends Component {
     this.setState({
       numberOfGuests: this.props.model.getNumberOfGuests(),
       dishNames: this.props.model.getMenuDishName(),
-      menu: this.props.model.getFullMenu(),
-      test: ["hi"]
+      dishPrices: this.props.model.getMenuDishPrice(),
+      menuPrice: this.props.model.getTotMenuPrice()
     })
   }
 
@@ -48,7 +49,6 @@ class Sidebar extends Component {
   }
 
   render() {
-    var mymenu = this.state.menu;
 
     return (
       <div className="Sidebar">
@@ -61,11 +61,24 @@ class Sidebar extends Component {
 
         <div id="dishesInSidebar">
           {this.state.dishNames.map((dishName) =>
-            <div class='col-xs-8'>{dishName}</div>
+            <div className='col-xs-10'>{dishName}</div>
           )}
           
-          <div class='col-xs-4'>SEK 0.00</div>
+          {this.state.dishPrices.map((dishPrice) =>
+          <div className='col-xs-2'>SEK {dishPrice}</div>
+          )}
+
         </div>
+
+        <div id="total_price" className="col-sm-12">
+          <p>
+            <span className="price">SEK {this.state.menuPrice}</span>
+          </p>
+        </div>
+
+        
+          <button className="btn btn-warning">Confirm Dinner</button>
+        
 
       </div>
     );
