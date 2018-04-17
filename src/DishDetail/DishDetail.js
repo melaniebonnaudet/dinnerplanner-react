@@ -33,9 +33,9 @@ class DishDetail extends Component {
 
 	addToMenu = () => {
 		modelInstance.addDishToMenu(this.props.match.params.dishID)
-		console.log(modelInstance.getFullMenu());
+		//console.log(modelInstance.getFullMenu());
 		modelInstance.setMenuDishName();
-		console.log(modelInstance.getMenuDishName());
+		//console.log(modelInstance.getMenuDishName());
 	}
 
 	removeFromMenu = () => {

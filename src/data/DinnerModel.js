@@ -7,7 +7,7 @@ const DinnerModel = function () {
   let numberOfGuests = 4;
   let observers = [];
   let menu = [];
-  let dishNames = ["812966"];
+  let dishNames = [];
 
   this.setNumberOfGuests = function (num) {
     numberOfGuests = num;
@@ -44,11 +44,12 @@ const DinnerModel = function () {
         this.getDish(menu[i]).then(dish => {
 
           dishNames.push(dish.title);
+          notifyObservers();
           console.log(dishNames);
-          console.log(this.getMenuDishName());
+          //console.log(this.getMenuDishName());
         });
       }
-      notifyObservers();
+      //notifyObservers();
     }
   }
 

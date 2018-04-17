@@ -23,20 +23,6 @@ class Sidebar extends Component {
 
   componentDidMount() {
     this.props.model.addObserver(this)
-    //this.props.model.setMenuDishName();
-    
-    /*var i;
-    for (i in this.state.menu) {
-    modelInstance.getDish(i).then(dish => {
-        //console.log(dish.title);
-        this.state.dishesNames.push(dish.title);
-     //   this.setState({
-      //    dishesNames: []
-      //  });
-        //dishNames.push(dish.title);
-        //console.log(dishNames);        
-      });
-    }*/
   }
 
   // this is called when component is removed from the DOM
@@ -74,8 +60,9 @@ class Sidebar extends Component {
         </p>
 
         <div id="dishesInSidebar">
-          
-            <div class='col-xs-8'>{this.state.dishNames}</div>
+          {this.state.dishNames.map((dishName) =>
+            <div class='col-xs-8'>{dishName}</div>
+          )}
           
           <div class='col-xs-4'>SEK 0.00</div>
         </div>
