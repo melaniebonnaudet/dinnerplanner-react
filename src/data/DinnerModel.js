@@ -10,6 +10,8 @@ const DinnerModel = function () {
   let dishNames = [];
   let dishPrices = [];
   let totalMenuPrice = 0;
+  let menuImg = [];
+  let menuInstructions = [];
 
   this.setNumberOfGuests = function (num) {
     numberOfGuests = num;
@@ -80,9 +82,54 @@ const DinnerModel = function () {
     return dishPrices;
   }
 
-this.getTotMenuPrice = function() {
-  return totalMenuPrice;
-}
+  this.getTotMenuPrice = function() {
+    return totalMenuPrice;
+  }
+
+  this.setMenuImg = function() {
+    var i;
+      if (menu.length != 0) {
+        while (menuImg.length > 0) {
+              menuImg.pop();
+            }
+        for (i in menu) {
+          this.getDish(menu[i]).then(dish => {
+
+            menuImg.push(dish.image);
+            notifyObservers();
+            //console.log(dishNames);
+            //console.log(this.getMenuDishName());
+          });
+        }
+      }
+    }
+
+  this.getMenuImg = function() {
+    return menuImg;
+  }
+
+  this.setMenuInstructions = function() {
+    var i;
+    if (menu.length != 0) {
+      while (menuInstructions.length > 0) {
+            menuInstructions.pop();
+          }
+      for (i in menu) {
+        this.getDish(menu[i]).then(dish => {
+
+          menuInstructions.push(dish.instructions);
+          notifyObservers();
+          //console.log(dishNames);
+          //console.log(this.getMenuDishName());
+        });
+      }
+    }    
+  }
+
+  this.getMenuInstructions = function() {
+    return menuInstructions;
+  }
+
   // API Calls
 
   this.getAllDishes = function (type, filter) {

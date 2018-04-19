@@ -1,0 +1,83 @@
+import React, { Component } from 'react';
+import './DinnerOverview.css';
+import {modelInstance} from '../data/DinnerModel';
+import { Link } from 'react-router-dom';
+
+class DinnerOverview extends Component {
+	constructor(props) {
+	    super(props);
+	    // We create the state to store the various statuses
+	    // e.g. API data loading or error 
+	    this.state = {
+	      status: 'INITIAL',
+	      dish: {},
+	      menu: modelInstance.getFullMenu()
+	    }
+	  }
+
+	componentDidMount = () => {
+	    // when data is retrieved we update the state
+	    // this will cause the component to re-render
+	    //0801710
+	    var i;
+	    for (i in this.state.menu) {
+	    modelInstance.getDish(this.state.menu[i]).then(mydish => {
+	    	console.log(mydish)
+	      this.setState({
+	        status: 'LOADED',
+	        dish: mydish
+	      })
+	    }).catch(() => {
+	      this.setState({
+	        status: 'ERROR'
+	      })
+	    })
+	}
+	  }
+
+
+  render() {
+
+	let dinnerOverview = null;
+
+	    // depending on the state we either generate
+	    // useful message to the user or show the list
+	    // of returned dishes
+    switch (this.state.status) {
+      case 'INITIAL':
+        dinnerOverview = <em>Loading...</em>
+        break;
+      case 'LOADED':
+      	let dish = this.state.dish;
+        dinnerOverview = (
+
+        	<div className="dishDetail">
+	            <div key={dish.id}>{dish.title}</div>
+	            <img src={dish.image} alt="food"></img>
+	            <p>SEK {((dish.pricePerServing / dish.servings)*modelInstance.getNumberOfGuests()).toFixed(2)}</p>
+	        </div>
+
+        );
+
+        break;
+      default:
+        dinnerOverview = <b>Failed to load data, please try again</b>
+        break;
+    }
+
+
+    return (
+      <div className="DinnerOverview">
+        <h2>This is the DinnerOverview screen</h2>
+      
+        <div>
+        	{dinnerOverview}
+        </div>
+
+
+      </div>
+    );
+  }
+}
+
+export default DinnerOverview;

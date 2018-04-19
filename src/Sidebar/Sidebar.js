@@ -32,6 +32,11 @@ class Sidebar extends Component {
     this.props.model.removeObserver(this)
   }
 
+  // our handler for the input's on change event
+  onNumberOfGuestsChanged = (e) => {
+    this.props.model.setNumberOfGuests(+e.target.value)
+  }
+
   // in our update function we modify the state which will
   // cause the component to re-render
   update() {
@@ -41,11 +46,6 @@ class Sidebar extends Component {
       dishPrices: this.props.model.getMenuDishPrice(),
       menuPrice: this.props.model.getTotMenuPrice()
     })
-  }
-
-  // our handler for the input's on change event
-  onNumberOfGuestsChanged = (e) => {
-    this.props.model.setNumberOfGuests(+e.target.value)
   }
 
   render() {
@@ -76,9 +76,9 @@ class Sidebar extends Component {
           </p>
         </div>
 
-        
+        <Link to="/dinneroverview">
           <button className="btn btn-warning">Confirm Dinner</button>
-        
+        </Link>
 
       </div>
     );

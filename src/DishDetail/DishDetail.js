@@ -10,8 +10,9 @@ class DishDetail extends Component {
 	    // We create the state to store the various statuses
 	    // e.g. API data loading or error 
 	    this.state = {
-	      status: 'INITIAL',
-	      dish: {} 
+			numberOfGuests: modelInstance.getNumberOfGuests(),
+			status: 'INITIAL',
+			dish: {} 
 	    }
 	  }
 
@@ -36,13 +37,25 @@ class DishDetail extends Component {
 		//console.log(modelInstance.getFullMenu());
 		modelInstance.setMenuDishName();
 		modelInstance.setMenuDishPrice();
+		modelInstance.setMenuImg();
+		modelInstance.setMenuInstructions();
 		//console.log(modelInstance.getMenuDishName());
 	}
 
 	removeFromMenu = () => {
 		modelInstance.removeDishFromMenu(this.props.match.params.dishID)
+		modelInstance.setMenuDishName();
+		modelInstance.setMenuDishPrice();
+		modelInstance.setMenuImg();
+		modelInstance.setMenuInstructions();
 		console.log(modelInstance.getFullMenu())
-	}		
+	}	
+
+	update() {
+    this.setState({
+      numberOfGuests: modelInstance.getNumberOfGuests()
+    })
+  }	
 
   render() {
 
@@ -70,7 +83,7 @@ class DishDetail extends Component {
 	        <div className="col-xs-6">
 	        	<div className="panel panel-warning" id="ingredientsView">
           			<div className= "panel-heading">
-              			<span>INGREDIENTS FOR</span> <span id="numberOfGuests">{modelInstance.getNumberOfGuests()}</span> <span>PEOPLE</span>
+              			<span>INGREDIENTS FOR</span> <span id="numberOfGuests">{this.state.numberOfGuests}</span> <span>PEOPLE</span>
         			</div>
           
           			<div className="panel-body">
